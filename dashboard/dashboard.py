@@ -3,13 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-st.set_page_config(page_title="Logistics Delay Dashboard 2018", layout="wide")
+st.set_page_config(page_title="Dashboard Delay Logistik E-Commerce 2018", layout="wide")
 
-# Header
-st.title("📦 E-Commerce Logistics Delay Analysis (2018)")
+# Judulnya
+st.title("📦 Analisis Delay Logistik E-Commerce (2018)")
 st.markdown("Dashboard pemantauan keterlambatan pengiriman pesanan melebihi 3 hari dari estimasi.")
 
-# Load Data
+# load data
 @st.cache_data
 def load_data():
     df = pd.read_csv("dashboard/main_data.csv")
@@ -18,7 +18,7 @@ def load_data():
 
 df_2018 = load_data()
 
-# Sidebar Filter
+# Filter di Sidebar
 st.sidebar.header("Filter Data")
 selected_states = st.sidebar.multiselect(
     "Pilih Negara Bagian (Customer State):",
@@ -28,7 +28,7 @@ selected_states = st.sidebar.multiselect(
 
 filtered_df = df_2018[df_2018['customer_state'].isin(selected_states)]
 
-# Metric Section
+# Bagian Metric
 total_orders = len(filtered_df)
 delayed_orders = filtered_df['is_delayed_3d'].sum()
 delay_rate = (delayed_orders / total_orders * 100) if total_orders > 0 else 0
@@ -40,7 +40,7 @@ col3.metric("Tingkat Keterlambatan", f"{delay_rate:.2f}%")
 
 st.divider()
 
-# Visualization Section
+# Bagian Visualisasi
 col_left, col_right = st.columns(2)
 
 with col_left:
